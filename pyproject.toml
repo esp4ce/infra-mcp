@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "infra-mcp"
+version = "0.1.0"
+description = "Local stdio MCP server for read-only diagnosis of on-prem Linux VMs and PostgreSQL databases"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "esp4ce" }]
+dependencies = [
+    "mcp[cli]>=1.28,<2.0",
+    "paramiko>=3.0,<4",  # sshtunnel 0.4 (unmaintained) references paramiko.DSSKey, removed in paramiko 4
+    "psycopg2-binary>=2.9",
+    "sshtunnel>=0.4",
+    "pydantic>=2.11",
+    "pyyaml>=6.0",
+    "typer>=0.12",
+    "keyring>=24.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/esp4ce/infra-mcp"
+Repository = "https://github.com/esp4ce/infra-mcp"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.scripts]
+infra-mcp = "infra_mcp.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/infra_mcp"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

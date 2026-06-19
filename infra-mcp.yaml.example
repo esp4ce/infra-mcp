@@ -1,0 +1,51 @@
+# infra-mcp configuration — single source of truth (plain text).
+# Copy to ~/.infra-mcp/infra-mcp.yaml and edit. Manage file permissions yourself
+# (e.g. chmod 600). Override the location with the INFRA_MCP_CONFIG env var or
+# the --config / -c CLI flag.
+
+# Local audit log location (append-only JSONL). Optional.
+audit_log_path: ~/.infra-mcp/audit.jsonl
+
+# Application log level (NOT the audit log). Optional. Default: WARNING.
+log_level: WARNING
+
+# Schema cache freshness window, in hours. Optional. Default: 24. Must be > 0.
+# list_tables / describe_table cache results IN MEMORY (per running server
+# process — no file on disk); an entry older than this is re-fetched on read.
+# A per-call `refresh: true` flag forces a live re-read regardless of age.
+schema_cache_ttl_hours: 24
+
+# At least one VM is required.
+vms:
+  - name: vm-med-files          # logical name, lowercase-kebab, starts with a letter
+    host: 192.168.1.10          # SSH hostname or IP (never exposed to the agent)
+    user: deploy                # SSH username
+    # SSH auth: provide key_path OR password (at least one).
+    key_path: ~/.ssh/id_rsa     # path to SSH private key
+    # password: "secret"        # plain-text SSH password (alternative to key_path)
+    # Per-VM known_hosts override. Optional; falls back to ~/.ssh/known_hosts.
+    known_hosts_file: ~/.ssh/known_hosts
+
+    # Watched systemd units. This list is the ALLOWLIST for service tool calls —
+    # a service not listed here is rejected before any SSH connection is made.
+    services:
+      - karaf
+      - haproxy
+
+    # Allowed directories for get_log_file. Must be ABSOLUTE paths. A requested
+    # path (after `..` normalization) must resolve inside one of these.
+    log_dirs:
+      - /var/log/karaf
+      - /var/log/haproxy
+
+    # PostgreSQL databases on this VM (connection is local to the VM).
+    databases:
+      - name: prod-db           # logical name, globally unique across all VMs
+        db_name: medfiles       # actual PostgreSQL database name
+        user: infra_readonly    # read-only role (created by `infra-mcp setup`)
+        # Read-only role password. Use the sentinel "keyring" to load it from the
+        # system keychain instead (stored under service "infra-mcp", key = name).
+        password: "keyring"
+        host: localhost         # optional, default localhost
+        port: 5432              # optional, default 5432
+        slow_query_ms: 1000     # optional, default 1000; threshold for "long-running"
