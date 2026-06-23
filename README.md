@@ -3,9 +3,8 @@
 # infra-mcp
 
 [![PyPI](https://img.shields.io/pypi/v/infra-mcp)](https://pypi.org/project/infra-mcp/)
-[![Python](https://img.shields.io/pypi/pyversions/infra-mcp)](https://pypi.org/project/infra-mcp/)
+[![Glama](https://img.shields.io/badge/Glama-grey?logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMjAgMzAwIj48cGF0aCBkPSJNNDAgMEgyMFYxNDBINDBWMFpNMjAwIDBIMTgwVjE0MEgyMDBWMFpNMjAgMTBIMTBWMTEwSDIwVjEwWk0yMTAgMTBIMjAwVjExMEgyMTBWMTBaTTEwIDIwSDBWODBIMTBWMjBaTTIyMCAyMEgyMTBWODBIMjIwVjIwWk01MCA2MEg0MFYxNDBINTBWNjBaTTE4MCA2MEgxNzBWMTQwSDE4MFY2MFpNMTUwIDcwSDcwVjE3MEgxNTBWNzBaTTcwIDgwSDUwVjE0MEg3MFY4MFpNMTcwIDgwSDE1MFYxNDBIMTcwVjgwWk0yMCAxMzBIMTBWMTQwSDIwVjEzMFpNMjEwIDEzMEgyMDBWMTQwSDIxMFYxMzBaTTcwIDE0MEg2MFYyMTBINzBWMTQwWk0xNjAgMTQwSDE1MFYyMTBIMTYwVjE0MFpNMzAgMTUwSDIwVjMwMEgzMFYxNTBaTTYwIDE1MEg1MFYzMDBINjBWMTUwWk0xNzAgMTUwSDE2MFYzMDBIMTcwVjE1MFpNMjAwIDE1MEgxOTBWMzAwSDIwMFYxNTBaTTUwIDE2MEgzMFYzMDBINTBWMTYwWk0xOTAgMTYwSDE3MFYzMDBIMTkwVjE2MFpNODAgMTcwSDcwVjIyMEg4MFYxNzBaTTEzMCAxNzBIOTBWMTgwSDEzMFYxNzBaTTE1MCAxNzBIMTQwVjIyMEgxNTBWMTcwWk0yMCAxODBIMTBWMjYwSDIwVjE4MFpNOTAgMTgwSDgwVjIyMEg5MFYxODBaTTE0MCAxODBIMTMwVjIyMEgxNDBWMTgwWk0yMTAgMTgwSDIwMFYyNjBIMjEwVjE4MFpNMTAwIDE5MEg5MFYyMjBIMTAwVjE5MFpNMTMwIDE5MEgxMjBWMjIwSDEzMFYxOTBaTTcwIDIyMEg2MFYzMDBINzBWMjIwWk0xNjAgMjIwSDE1MFYzMDBIMTYwVjIyMFpNOTAgMjMwSDcwVjMwMEg5MFYyMzBaTTE1MCAyMzBIMTMwVjMwMEgxNTBWMjMwWk0xMzAgMjUwSDkwVjMwMEgxMzBWMjUwWiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=&logoColor=white)](https://glama.ai/mcp/servers/esp4ce/infra-mcp)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![MCP Server](https://glama.ai/mcp/servers/esp4ce/infra-mcp/badge.svg)](https://glama.ai/mcp/servers/esp4ce/infra-mcp)
 
 *Read-only MCP access to on-prem Linux VMs and PostgreSQL databases over SSH.*
 
