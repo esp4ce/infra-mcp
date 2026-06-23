@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from typing import Annotated
+
+from pydantic import Field
 
 from infra_mcp import runtime, schema_cache
 from infra_mcp.errors import InfraMcpError
@@ -39,7 +42,9 @@ def _require_db(name: str):
     return found[1]
 
 
-def get_db_status(db: str) -> str:  # noqa: A002 - matches contract param name
+def get_db_status(
+    db: Annotated[str, Field(description="Database name as defined in infra-mcp.yaml")],  # noqa: A002
+) -> str:
     """Return connection counts, waiting locks, and long-running query count (TSV)."""
     from infra_mcp import db as dbmod
 
@@ -51,7 +56,11 @@ def get_db_status(db: str) -> str:  # noqa: A002 - matches contract param name
         return f"ERROR: {e}"
 
 
-def query_db(db: str, sql: str, limit: int = 50) -> str:  # noqa: A002
+def query_db(
+    db: Annotated[str, Field(description="Database name as defined in infra-mcp.yaml")],  # noqa: A002
+    sql: Annotated[str, Field(description="SELECT statement to execute; non-SELECT statements are rejected")],
+    limit: Annotated[int, Field(description="Maximum rows to return; server-capped at 100")] = 50,
+) -> str:
     """Run a bounded SELECT against a configured database. Returns TSV with header."""
     from infra_mcp import db as dbmod
 
@@ -100,7 +109,10 @@ def _render_description(entry: dict) -> str:
     return "\n".join(lines)
 
 
-def list_tables(db: str, refresh: bool = False) -> str:  # noqa: A002
+def list_tables(
+    db: Annotated[str, Field(description="Database name as defined in infra-mcp.yaml")],  # noqa: A002
+    refresh: Annotated[bool, Field(description="Skip the in-memory cache and force a live re-read")] = False,
+) -> str:
     """List a database's tables (schema<TAB>table TSV). Cache-first, bounded at 200."""
     from infra_mcp import db as dbmod
 
@@ -122,7 +134,11 @@ def list_tables(db: str, refresh: bool = False) -> str:  # noqa: A002
         return f"ERROR: {e}"
 
 
-def describe_table(db: str, table: str, refresh: bool = False) -> str:  # noqa: A002
+def describe_table(
+    db: Annotated[str, Field(description="Database name as defined in infra-mcp.yaml")],  # noqa: A002
+    table: Annotated[str, Field(description="Table name; use schema.table to disambiguate across schemas")],
+    refresh: Annotated[bool, Field(description="Skip the in-memory cache and force a live re-read")] = False,
+) -> str:
     """Describe one table's columns, primary key, and foreign keys. Cache-first."""
     from infra_mcp import db as dbmod
 

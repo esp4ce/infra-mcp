@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Annotated
+
+from pydantic import Field
+
 from infra_mcp import audit, db, runtime
 from infra_mcp.errors import InfraMcpError, VMUnreachableError
 from infra_mcp.ssh import clamp_lines
@@ -15,7 +19,9 @@ _OVERVIEW_DESC = (
 _AUDIT_DESC = "Returns recent entries from the local audit log (oldest first)."
 
 
-def get_infra_overview(vm: str) -> str:
+def get_infra_overview(
+    vm: Annotated[str, Field(description="VM name as defined in infra-mcp.yaml")],
+) -> str:
     """Aggregate service statuses + DB health for one VM into a single response."""
     try:
         vm_cfg = ssh_tools._require_vm(vm)
@@ -50,7 +56,9 @@ def get_infra_overview(vm: str) -> str:
     return "\n".join(svc_lines + db_lines)
 
 
-def get_audit_log(lines: int = 50) -> str:
+def get_audit_log(
+    lines: Annotated[int, Field(description="Maximum entries to return; server-capped at 200")] = 50,
+) -> str:
     """Return the last N entries from the local audit log. Reads local file only."""
     n = clamp_lines(lines)
     entries = audit.read_tail(runtime.get_audit_path(), n)

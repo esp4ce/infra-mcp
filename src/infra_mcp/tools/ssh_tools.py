@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import shlex
+from typing import Annotated
+
+from pydantic import Field
 
 from infra_mcp import runtime, ssh
 from infra_mcp.errors import InfraMcpError, VMUnreachableError
@@ -57,7 +60,10 @@ def _service_state(vm, service: str, audit_path) -> tuple[str, str]:
     return state, uptime
 
 
-def get_service_status(vm: str, service: str) -> str:
+def get_service_status(
+    vm: Annotated[str, Field(description="VM name as defined in infra-mcp.yaml")],
+    service: Annotated[str, Field(description="systemd service name; must be in the VM's allowlist")],
+) -> str:
     """Return systemd state, uptime, and last 5 log lines for a service."""
     try:
         vm_cfg = _require_vm(vm)
@@ -73,7 +79,10 @@ def get_service_status(vm: str, service: str) -> str:
 
 
 def get_service_logs(
-    vm: str, service: str, level: str = "error", lines: int = 50
+    vm: Annotated[str, Field(description="VM name as defined in infra-mcp.yaml")],
+    service: Annotated[str, Field(description="systemd service name; must be in the VM's allowlist")],
+    level: Annotated[str, Field(description="Minimum severity to include: error | warning | info | debug")] = "error",
+    lines: Annotated[int, Field(description="Maximum lines to return; server-capped at 200")] = 50,
 ) -> str:
     """Return bounded journald logs for a service, filtered by severity level."""
     try:
@@ -89,7 +98,12 @@ def get_service_logs(
         return f"ERROR: {e}"
 
 
-def get_log_file(vm: str, path: str, lines: int = 50, pattern: str | None = None) -> str:
+def get_log_file(
+    vm: Annotated[str, Field(description="VM name as defined in infra-mcp.yaml")],
+    path: Annotated[str, Field(description="Absolute path to the log file; must be under a configured log_dirs entry")],
+    lines: Annotated[int, Field(description="Maximum lines to return; server-capped at 200")] = 50,
+    pattern: Annotated[str | None, Field(description="Extended regex applied on the VM before transmission (grep -E)")] = None,
+) -> str:
     """Return last N lines of a log file on a VM, with optional grep pattern."""
     try:
         vm_cfg = _require_vm(vm)
