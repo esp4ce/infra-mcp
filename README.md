@@ -55,6 +55,19 @@ infra-mcp run
 
 Register as a **stdio** MCP server in your client (Claude Code, Cursor, …) with command `infra-mcp run`.
 
+## Updates
+
+`infra-mcp` checks PyPI for a newer release once a day and, when one exists, prints a
+one-line hint to stderr telling you how to upgrade:
+
+```bash
+uv tool upgrade infra-mcp   # or: pip install --upgrade infra-mcp
+```
+
+The check runs in the background, never blocks startup, and never touches stdout. Print
+the installed version with `infra-mcp --version`. Disable the check entirely by setting
+`INFRA_MCP_NO_UPDATE_CHECK=1`.
+
 ## Tools
 
 ### VM & services

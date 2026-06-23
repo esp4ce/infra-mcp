@@ -36,6 +36,9 @@ def _main(
     ),
 ) -> None:
     """Read-only infra diagnosis MCP server."""
+    from infra_mcp import update_check
+
+    update_check.maybe_notify()
 
 
 @app.command()
