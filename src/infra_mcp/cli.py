@@ -9,12 +9,39 @@ from typing import Optional
 
 import typer
 
+from infra_mcp import __version__
 from infra_mcp.config import load_config
 from infra_mcp.errors import InfraMcpError
 
 app = typer.Typer(add_completion=False, help="Read-only infra diagnosis MCP server.")
 
 _ConfigOpt = typer.Option(None, "--config", "-c", help="Path to infra-mcp.yaml")
+
+
+def _version_callback(value: bool) -> None:
+    if value:
+        typer.echo(__version__)
+        raise typer.Exit()
+
+
+@app.callback()
+def _main(
+    version: bool = typer.Option(
+        False,
+        "--version",
+        "-V",
+        callback=_version_callback,
+        is_eager=True,
+        help="Show the installed version and exit.",
+    ),
+) -> None:
+    """Read-only infra diagnosis MCP server."""
+
+
+@app.command()
+def version() -> None:
+    """Print the installed infra-mcp version."""
+    typer.echo(__version__)
 
 
 @app.command()
