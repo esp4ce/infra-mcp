@@ -5,6 +5,7 @@
 [![PyPI](https://img.shields.io/pypi/v/infra-mcp)](https://pypi.org/project/infra-mcp/)
 [![Python](https://img.shields.io/pypi/pyversions/infra-mcp)](https://pypi.org/project/infra-mcp/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![MCP Server](https://glama.ai/mcp/servers/esp4ce/infra-mcp/badge.svg)](https://glama.ai/mcp/servers/esp4ce/infra-mcp)
 
 *Read-only MCP access to on-prem Linux VMs and PostgreSQL databases over SSH.*
 
