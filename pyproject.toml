@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "infra-mcp"
-version = "0.1.2"
+version = "0.1.1"
 description = "Local stdio MCP server for read-only diagnosis of on-prem Linux VMs and PostgreSQL databases"
 readme = "README.md"
 requires-python = ">=3.11"
